@@ -16,7 +16,7 @@ class DummyClassServiceProvider extends ServiceProvider
     {
         // Default Package Configuration
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/dummy_name.php', 'dummy_name',
+            __DIR__.'/../../config/dummy_name.php', 'dummy_name'
         );
     }
 
