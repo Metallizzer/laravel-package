@@ -1,0 +1,91 @@
+<?php
+
+namespace DummyNamespace\Providers;
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\ServiceProvider;
+
+class DummyClassServiceProvider extends ServiceProvider
+{
+    /**
+     * Register services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        // Default Package Configuration
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/dummy_name.php', 'dummy_name',
+        );
+    }
+
+    /**
+     * Bootstrap services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if ($this->app->runningInConsole()) {
+            // Commands
+            // $this->commands([
+            // ]);
+
+            // Configuration
+            $this->publishes([
+                __DIR__.'/../../config/dummy_name.php' => config_path('dummy_name.php'),
+            ], 'config');
+
+            // Migrations
+            $this->loadMigrationsFrom(__DIR__.'/../../database/migrations');
+            $this->publishes([
+                __DIR__.'/../../database/migrations' => database_path('migrations'),
+            ], 'migrations');
+
+            // Translations
+            $this->publishes([
+                __DIR__.'/../../resources/lang' => resource_path('lang/vendor/dummy_name'),
+            ], 'lang');
+
+            // Views
+            $this->publishes([
+                __DIR__.'/../../resources/views' => resource_path('views/vendor/dummy_name'),
+            ], 'views');
+
+            // Public Assets
+            $this->publishes([
+                __DIR__.'/../../public' => public_path('vendor/dummy_name'),
+            ], 'public');
+        }
+
+        // Translations
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'dummy_name');
+
+        // Views
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'dummy_name');
+
+        // Routes
+        $this->registerRoutes();
+    }
+
+    /**
+     * Register routes.
+     *
+     * @return void
+     */
+    public function registerRoutes()
+    {
+        if ($this->app->routesAreCached()) {
+            return;
+        }
+
+        Route::middleware('web')
+            ->prefix(config('dummy_name.route_prefix'))
+            ->name('dummy_name.')
+            ->namespace('Dummy\\Namespace\\Http\\Controllers')
+            ->group(function () {
+                Route::get('/', 'DummyClassController@index')->name('index');
+            });
+    }
+}

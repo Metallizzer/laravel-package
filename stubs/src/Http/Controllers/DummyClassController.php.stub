@@ -1,0 +1,13 @@
+<?php
+
+namespace DummyNamespace\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class DummyClassController extends Controller
+{
+    public function index()
+    {
+        return view('dummy_name::index');
+    }
+}
