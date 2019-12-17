@@ -12,11 +12,12 @@
     <testsuites>
         <testsuite name="Package Test Suite">
             <directory>tests</directory>
+            <exclude>tests/temp</exclude>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">src</directory>
         </whitelist>
     </filter>
 </phpunit>
