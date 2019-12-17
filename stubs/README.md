@@ -1,5 +1,6 @@
 # DummyClass
 
+[![Build Status](https://travis-ci.org/:author_username/:package_name.svg?branch=master)](https://travis-ci.org/:author_username/:package_name)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor/:package_name.svg?style=flat-square)](https://packagist.org/packages/:vendor/:package_name)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/:vendor/:package_name.svg?style=flat-square)](https://packagist.org/packages/:vendor/:package_name)

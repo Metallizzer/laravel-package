@@ -1,5 +1,6 @@
 # Laravel package generator
 
+[![Build Status](https://travis-ci.org/Metallizzer/laravel-package.svg?branch=master)](https://travis-ci.org/Metallizzer/laravel-package)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/metallizzer/laravel-package.svg?style=flat-square)](https://packagist.org/packages/metallizzer/laravel-package)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/metallizzer/laravel-package.svg?style=flat-square)](https://packagist.org/packages/metallizzer/laravel-package)
