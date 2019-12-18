@@ -21,11 +21,13 @@ class MigrateMakeCommand extends Command
      */
     public function __construct(MigrationCreator $creator, Composer $composer)
     {
-        $this->signature = str_replace(
+        $this->signature = str_replace([
             'make:migration',
-            'package:make:migration {package : The name of the package}',
-            $this->signature
-        );
+            '{--create=',
+        ], [
+            'package:make:migration',
+            '{--package= : The name of the package}'.PHP_EOL.'{--create=',
+        ], $this->signature);
 
         $this->description = $this->description.' for your package';
 

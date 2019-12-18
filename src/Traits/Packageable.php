@@ -6,7 +6,7 @@ use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Metallizzer\Package\Package;
 use Metallizzer\Package\PackageException;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 trait Packageable
 {
@@ -36,7 +36,9 @@ trait Packageable
      */
     public function handle()
     {
-        $package = trim($this->argument('package'));
+        if (!$package = trim($this->option('package'))) {
+            $package = $this->choice('Select package:', $this->getPackagesList());
+        }
 
         try {
             $this->package = new Package($package, $this->files);
@@ -48,7 +50,7 @@ trait Packageable
             return $this->error(sprintf('Package %s not found.', $package));
         }
 
-        $this->package->checkAutoload(true);
+        $this->package->addToAutoload();
 
         return parent::handle();
     }
@@ -65,12 +67,36 @@ trait Packageable
         if (strpos($command, 'make:') === 0) {
             $command = 'package:'.$command;
 
-            $arguments = array_merge([
-                'package' => $this->package->fullName,
-            ], $arguments);
+            $arguments = array_merge($arguments, [
+                '--package' => $this->package->fullName,
+            ]);
         }
 
         return parent::call($command, $arguments);
+    }
+
+    /**
+     * Returns list of existence packages.
+     *
+     * @return array
+     */
+    protected function getPackagesList()
+    {
+        $packages = [];
+
+        if (!$dirs = glob(config('package.path').'/*/*', GLOB_ONLYDIR)) {
+            return $packages;
+        }
+
+        $path = realpath(config('package.path'));
+
+        foreach ($dirs as $dir) {
+            $name = trim(Str::after(realpath($dir), $path), DIRECTORY_SEPARATOR);
+
+            $packages[] = $name;
+        }
+
+        return $packages;
     }
 
     /**
@@ -98,14 +124,17 @@ trait Packageable
     }
 
     /**
-     * Get the console command arguments.
+     * Get the console command options.
      *
      * @return array
      */
-    protected function getArguments()
+    protected function getOptions()
     {
-        return array_merge([
-            ['package', InputArgument::REQUIRED, 'The name of the package'],
-        ], parent::getArguments());
+        return array_merge(
+            parent::getOptions(),
+            [
+                ['package', null, InputOption::VALUE_OPTIONAL, 'The name of the package', null],
+            ]
+        );
     }
 }

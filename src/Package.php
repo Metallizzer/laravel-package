@@ -164,18 +164,10 @@ class Package extends Item
         throw new RuntimeException('Unable to detect package namespace.');
     }
 
-    public function checkAutoload($add = false)
+    public function addToAutoload()
     {
         $loader = require base_path('vendor/autoload.php');
 
-        if (array_key_exists($this->getNamespace(), $loader->getPrefixesPsr4())) {
-            return true;
-        } elseif (!$add) {
-            return false;
-        }
-
         $loader->addPsr4($this->getNamespace(), $this->path.'/src');
-
-        return true;
     }
 }

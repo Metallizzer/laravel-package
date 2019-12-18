@@ -1,11 +1,12 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-    ->name('*.php')
+    ->notPath('vendor')
+    ->notPath('bootstrap')
+    ->notPath('storage')
     ->in(__DIR__)
-    ->depth('> 0')
-    ->notPath('/\bvendor\b/')
-    ->notPath('/\bresources\/views\b/')
+    ->name('*.php')
+    ->notName('*.blade.php')
 ;
 
 return PhpCsFixer\Config::create()
