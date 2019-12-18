@@ -37,7 +37,11 @@ trait Packageable
     public function handle()
     {
         if (!$package = trim($this->option('package'))) {
-            $package = $this->choice('Select package:', $this->getPackagesList());
+            if (!$packages = $this->getPackagesList()) {
+                return $this->error('Could not find any packages.');
+            }
+
+            $package = $this->choice('Select package:', $packages);
         }
 
         try {
