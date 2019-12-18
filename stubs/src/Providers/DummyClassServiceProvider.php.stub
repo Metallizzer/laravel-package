@@ -80,12 +80,20 @@ class DummyClassServiceProvider extends ServiceProvider
             return;
         }
 
-        Route::middleware('web')
-            ->prefix(config('dummy_name.route_prefix'))
-            ->name('dummy_name.')
-            ->namespace('Dummy\\Namespace\\Http\\Controllers')
-            ->group(function () {
-                Route::get('/', 'DummyClassController@index')->name('index');
-            });
+        if (file_exists($web = __DIR__.'/../../routes/web.php')) {
+            Route::prefix(config('dummy_name.route_prefix'))
+                ->middleware('web')
+                ->name('dummy_name.')
+                ->namespace('Dummy\\Namespace\\Http\\Controllers')
+                ->group($web);
+        }
+
+        if (file_exists($api = __DIR__.'/../../routes/api.php')) {
+            Route::prefix('api/'.config('dummy_name.route_prefix'))
+                ->middleware('api')
+                ->name('api.dummy_name.')
+                ->namespace('Dummy\\Namespace\\Http\\Controllers')
+                ->group($api);
+        }
     }
 }
