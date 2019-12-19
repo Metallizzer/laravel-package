@@ -139,6 +139,8 @@ class Package extends Item
             if ($filename !== $file->getRealPath()) {
                 $this->files->move($file->getRealpath(), $filename);
             }
+
+            $this->files->chmod($filename, 0644);
         }
     }
 
