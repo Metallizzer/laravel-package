@@ -114,7 +114,7 @@ class Package extends Item
             ]
         );
 
-        $this->files->copyDirectory(__DIR__.'/../stubs', $this->path);
+        $this->files->copyDirectory(__DIR__.'/../stubs/package', $this->path);
 
         foreach ($this->files->allFiles($this->path, true) as $file) {
             $replacement = $replace;
