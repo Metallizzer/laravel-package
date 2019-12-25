@@ -37,7 +37,7 @@ All available commands you can view by running:
 php artisan list package:make
 ```
 
-### Changelog
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
