@@ -20,9 +20,11 @@ trait Packageable
      */
     public function __construct(Filesystem $files)
     {
-        $this->name = 'package:'.$this->name;
+        if (strpos($this->name, 'make:') === 0) {
+            $this->name = 'package:'.$this->name;
 
-        $this->description = $this->description.' for your package';
+            $this->description = $this->description.' for your package';
+        }
 
         parent::__construct($files);
     }
